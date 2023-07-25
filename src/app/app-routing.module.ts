@@ -5,16 +5,36 @@ import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { HeroesComponent } from './components/heroes/heroes.component';
 import { HeroeComponent } from './componentes/heroe/heroe.component';
+import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/login/login.component';
+import { canActivate, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 
 
 const routes: Routes = [
-  {path: 'home', component: HomeComponent},
-  {path: 'about', component: AboutComponent},
-  {path: 'heroes', component: HeroesComponent},
-  {path: 'heroe/:id', component: HeroeComponent},
-  {path: '**', pathMatch: 'full', redirectTo:'home'}
+  
+
+  { path: '', pathMatch: 'full', redirectTo: '/home' },
+  {
+    path: 'home',
+    component: HomeComponent,
+    ...canActivate(() => redirectUnauthorizedTo(['/home']))
+  },
+  {
+    path: 'heroes',
+    component: HeroesComponent,
+    ...canActivate(() => redirectUnauthorizedTo(['/register']))
+  },
+  
+  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent },
+  
+
 
 ];
+
+
+
+
 
 
 @NgModule({
